@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const isAuth = (req, res, next) => {
+const isAuth = async (req, res, next) => {
   const token = req.session?.token || req.cookies?.token;
 
   try {
@@ -19,7 +19,6 @@ const isAuth = (req, res, next) => {
     }
     return res.status(401).json({ message: "Invalid token!" });
   }
-  return res.status(401).json({ message: "Invalid or expired token!" });
 };
 
 module.exports = isAuth;

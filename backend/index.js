@@ -9,6 +9,11 @@ const db = require('./db.js');
 
 // import routes
 const authRoutes = require('./routes/authRoutes.js');
+const userRoutes = require('./routes/userRoutes.js');
+const taskRoutes = require('./routes/taskRoutes.js');
+
+// importing middleware
+const isAuth = require('./middleware/isAuth.js');
 
 const app = express(); 
 
@@ -37,6 +42,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // routes
 app.use('/auth', authRoutes);
+app.use('/user', isAuth, userRoutes);
+app.use('/task', isAuth, taskRoutes);
 
 // server
 app.listen(4000, () => {
