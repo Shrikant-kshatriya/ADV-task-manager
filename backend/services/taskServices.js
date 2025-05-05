@@ -109,6 +109,17 @@ const deleteTask = async (id) => {
         if (!task) {
             throw new Error('Task cannot be deleted');
         }
+        // Notify the user who the task is assigned to
+        const assignedByUser = await getUser(task.assignedBy);
+        if (!assignedByUser) {
+            throw new Error('User not found');
+        }
+        const notificationData = {
+            userId: task.assignedTo,
+            message: `Task assigned to you by ${assignedByUser.username} has been deleted: ${task.title}`,
+            isRead: false,
+        };
+        await createNotification(notificationData);
         return task;
     } catch (err) {
         return { err, message: err.message };
