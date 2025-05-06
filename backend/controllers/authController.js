@@ -42,8 +42,8 @@ const login = async (req, res) => {
     }
     const token = jwt.sign({ id: loggeduser.user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '10d' });
     req.session.token = token;
-    res.cookie("token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: 'None' });
-    res.status(200).json({ message: "Login successful", user: { username: loggeduser.user.username, id: loggeduser.user._id, email: loggeduser.user.email, role: loggeduser.user.role}});
+    res.cookie("token", token, { httpOnly: true, secure: true, sameSite: 'None' });
+    res.status(200).json({ message: "Login successful", user: { username: loggeduser.user.username, _id: loggeduser.user._id, email: loggeduser.user.email, role: loggeduser.user.role}});
 
     } catch (error) {
     res.status(500).json({ message: "Server error" }); 

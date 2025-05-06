@@ -4,7 +4,7 @@ const { getUser } = require('./userServices.js');
 
 const getTaskById = async (id) => {
     try {
-        const task = await Task.findById(id).populate('assignedBy', 'username');
+        const task = await Task.findById(id).populate('assignedBy', 'username').populate('assignedTo', 'username');
         if (!task) {
             throw new Error('Task not found');
         }
@@ -17,7 +17,10 @@ const getTaskById = async (id) => {
 
 const getAllTasksToMe = async (id) => {
     try {
-        const tasks = await Task.find({ assignedTo: id }).populate('assignedBy', 'username');
+        const tasks = await Task.find({ assignedTo: id }).populate('assignedBy', 'username').populate('assignedTo', 'username');
+        if (!tasks) {
+            throw new Error('Tasks not found');
+        }
         return tasks;
     } catch (err) {
         return { err, message: err.message };
@@ -26,7 +29,7 @@ const getAllTasksToMe = async (id) => {
 
 const getAllTasksByMe = async (id) => {
     try {
-        const tasks = await Task.find({ assignedBy: id }).populate('assignedBy', 'username');
+        const tasks = await Task.find({ assignedBy: id }).populate('assignedBy', 'username').populate('assignedTo', 'username');
         return tasks;
     } catch (err) {
         return { err, message: err.message };

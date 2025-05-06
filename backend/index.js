@@ -21,7 +21,13 @@ const app = express();
 db();
 
 // cors setting
-app.use(cors());
+app.use(cors({
+    origin: ['http://localhost:3000', '*'],
+    credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type,Authorization'
+    
+}));
 
 // middleware
 app.use(cookieParser());
@@ -32,7 +38,8 @@ app.use(session({
     maxAge: 10* 24 * 60 * 60 * 1000, // 10 days
     cookie: {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        // secure: process.env.NODE_ENV === 'production',
+        secure: true,
         sameSite: 'None',
     },
 }));

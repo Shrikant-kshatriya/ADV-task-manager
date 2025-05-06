@@ -1,26 +1,35 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Global Dark Theme Scrollbar for the main content area */
+.overflow-y-auto::-webkit-scrollbar {
+  @apply w-2; /* Adjust width as needed */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.overflow-y-auto::-webkit-scrollbar-track {
+  @apply bg-gray-800 rounded-lg; /* Dark background for the track */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  @apply bg-gray-600 rounded-lg hover:bg-gray-500; /* Darker thumb with hover effect */
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.overflow-y-auto::-webkit-scrollbar-thumb:active {
+  @apply bg-gray-400; /* Even darker thumb when active */
+}
+
+/* Optional: Global body scrollbar (if needed) */
+body::-webkit-scrollbar {
+  @apply w-2;
+}
+
+body::-webkit-scrollbar-track {
+  @apply bg-gray-800 rounded-lg;
+}
+
+body::-webkit-scrollbar-thumb {
+  @apply bg-gray-600 rounded-lg hover:bg-gray-500;
+}
+
+body::-webkit-scrollbar-thumb:active {
+  @apply bg-gray-400;
 }
