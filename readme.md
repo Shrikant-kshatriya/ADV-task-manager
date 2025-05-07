@@ -5,7 +5,7 @@ A full-stack task management application built for small teams, focusing on coll
 ## 🌐 Live Demo
 
 **Frontend**: [https://stamurai-frontend.vercel.app/](https://stamurai-frontend.vercel.app/)
-**Backend**: [https://stamurai-backend.vercel.app/](https://stamurai-backend.vercel.app/)
+**Backend**: [https://stamurai-backend.onrender.com/](https://stamurai-backend.onrender.com/)
 
 ---
 
@@ -152,5 +152,5 @@ npm run dev
 
 * **GitHub Repo**: [https://github.com/Shrikant-kshatriya/ADV-task-manager](https://github.com/Shrikant-kshatriya/ADV-task-manager)
 * **Deployed Frontend**: [https://stamurai-frontend.vercel.app/](https://stamurai-frontend.vercel.app/)
-* **Deployed Backend**: [https://stamurai-backend.vercel.app/](https://stamurai-backend.vercel.app/)
+* **Deployed Backend**: [https://stamurai-backend.onrender.com/](https://stamurai-backend.onrender.com/)
 
