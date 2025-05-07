@@ -48,6 +48,11 @@ app.use(session({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// get
+app.get('/', (req, res) => {
+    res.send('Server is running');
+});
+
 
 // routes
 app.use('/auth', authRoutes);
