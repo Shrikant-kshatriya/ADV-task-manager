@@ -18,7 +18,7 @@ export default function Home() {
           TaskFlow
         </h1>
         <p className="text-gray-300 text-lg max-w-xl mx-auto">
-          Manage your team's tasks with clarity and speed. Assign, track, and organize like a pro.
+          Manage your team&apos;s tasks with clarity and speed. Assign, track, and organize like a pro.
         </p>
         <Link
           href="/login"
