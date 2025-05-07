@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import api from "@/utils/api";
 import { useAuth } from "@/context/AuthContext";
+import { initSocket } from "@/context/SocketContext";
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -35,12 +36,17 @@ export default function LoginPage() {
     try {
       const user = await api.post("/auth/login", form);
       toast.success("Login successful!");
-      setUser(user.data.user); 
+      setUser(user.data.user); // Set user in context
+  
+      // Initialize socket with user ID after login
+      initSocket(user.data.user._id);
+  
       router.push("/dashboard");
     } catch (err) {
       setError(err?.response?.data?.message || "Login failed.");
     }
   };
+  
 
   return (
     <div className="flex items-center justify-center bg-gray-950 text-white" style={{ minHeight: "calc(100vh - 130px)" }}>

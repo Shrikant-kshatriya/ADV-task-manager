@@ -5,7 +5,9 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const cors = require('cors');
+const http = require('http');
 const db = require('./db.js');
+const { initSocket } = require('./socket');
 
 // import routes
 const authRoutes = require('./routes/authRoutes.js');
@@ -16,13 +18,14 @@ const taskRoutes = require('./routes/taskRoutes.js');
 const isAuth = require('./middleware/isAuth.js');
 
 const app = express(); 
+const server = http.createServer(app);
 
 // database connection
 db();
 
 // cors setting
 app.use(cors({
-    origin: ['http://localhost:3000', '*'],
+    origin: [process.env.CLIENT_URL, '*'],
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type,Authorization'
@@ -38,7 +41,6 @@ app.use(session({
     maxAge: 10* 24 * 60 * 60 * 1000, // 10 days
     cookie: {
         httpOnly: true,
-        // secure: process.env.NODE_ENV === 'production',
         secure: true,
         sameSite: 'None',
     },
@@ -52,9 +54,10 @@ app.use('/auth', authRoutes);
 app.use('/user', isAuth, userRoutes);
 app.use('/task', isAuth, taskRoutes);
 
-// server
-app.listen(4000, () => {
+// initialize socket
+initSocket(server);
+
+// server listen
+server.listen(4000, () => {
     console.log('Server is running on port 4000');
 });
-
- 

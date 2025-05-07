@@ -1,21 +1,23 @@
-'use client';
-import { createContext, useContext, useEffect, useState } from 'react';
-import { io } from 'socket.io-client';
+// context/SocketContext.js
+import { io } from "socket.io-client";
 
-export const SocketContext = createContext();
+let socket = null;
 
-export const SocketProvider = ({ children }) => {
-  const [socket, setSocket] = useState(null);
+export const initSocket = (userId) => {
+  if (typeof window === "undefined" || socket || !userId) return;
 
-  useEffect(() => {
-    const newSocket = io(process.env.NEXT_PUBLIC_API_BASE_URL, {
-      withCredentials: true
-    });
-    setSocket(newSocket);
-    return () => newSocket.close();
-  }, []);
+  socket = io(process.env.NEXT_PUBLIC_API_URL, {
+    withCredentials: true,
+  });
 
-  return <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>;
+  socket.on("connect", () => {
+    console.log("Socket connected:", socket.id);
+    socket.emit("register", userId);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Socket disconnected");
+  });
 };
 
-export const useSocket = () => useContext(SocketContext);
+export const getSocket = () => socket;

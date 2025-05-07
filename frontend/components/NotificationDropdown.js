@@ -5,6 +5,7 @@ import { Bell } from "lucide-react";
 import api from "@/utils/api";
 import moment from "moment";
 import { AnimatePresence, motion } from "framer-motion";
+import { getSocket } from "@/context/SocketContext";
 
 export default function NotificationDropdown() {
   const [notifications, setNotifications] = useState([]);
@@ -37,6 +38,21 @@ export default function NotificationDropdown() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    const socket = getSocket();
+    if (!socket) return;
+  
+    const handleNewNotification = (notification) => {
+      setNotifications((prev) => [notification, ...prev]);
+    };
+  
+    socket.on("new_notification", handleNewNotification);
+    return () => {
+      socket.off("new_notification", handleNewNotification);
+    };
+  }, []);
+  
 
   const handleMarkRead = async (id) => {
     try {
